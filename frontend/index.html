@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRT | PULSE TELEMETRY</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=JetBrains+Mono:wght@300&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="glass-overlay"></div>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <span class="pulse"></span>
+                <h1>SRT PULSE <small>| MONITOR</small></h1>
+            </div>
+            <div class="status-badge" id="app-status">DISCONNECTED</div>
+        </header>
+
+        <main>
+            <section class="config-panel card">
+                <h2>CONNECTION</h2>
+                <div class="input-group">
+                    <label>IP ADDRESS</label>
+                    <input type="text" id="host" placeholder="127.0.0.1" value="127.0.0.1">
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>PORT</label>
+                        <input type="number" id="port" value="5000">
+                    </div>
+                    <div class="input-group">
+                        <label>MODE</label>
+                        <select id="mode">
+                            <option value="caller">CALLER</option>
+                            <option value="listener">LISTENER</option>
+                            <option value="rendezvous">RENDEZVOUS</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>LATENCY (ms)</label>
+                        <input type="number" id="latency" value="1000">
+                    </div>
+                    <div class="input-group">
+                        <label>PASSPHRASE</label>
+                        <input type="password" id="passphrase" placeholder="optional">
+                    </div>
+                </div>
+                <button id="engage-btn" class="glow-btn">ENGAGE</button>
+                <button id="download-log-btn" class="secondary-btn" style="display: none;">DOWNLOAD SESSION LOG</button>
+            </section>
+
+            <section class="metrics-grid">
+                <div class="metricCard card" id="rtt-card">
+                    <h3>RTT</h3>
+                    <div class="big-value"><span id="rtt-val">0</span><small>ms</small></div>
+                    <div class="trend-indicator" id="rtt-trend">STABLE</div>
+                </div>
+                <div class="metricCard card" id="loss-card">
+                    <h3>PACKET LOSS</h3>
+                    <div class="big-value"><span id="loss-val">0</span><small>%</small></div>
+                    <div class="trend-indicator" id="loss-trend">EXCELLENT</div>
+                </div>
+                <div class="metricCard card" id="jitter-card">
+                    <h3>JITTER</h3>
+                    <div class="big-value"><span id="jitter-val">0</span><small>ms</small></div>
+                    <div class="trend-indicator" id="jitter-trend">NOMINAL</div>
+                </div>
+                <div class="metricCard card" id="bitrate-card">
+                    <h3>BITRATE</h3>
+                    <div class="big-value"><span id="bitrate-val">0</span><small>Mbps</small></div>
+                    <div class="trend-indicator" id="bitrate-trend">--</div>
+                </div>
+                <div class="metricCard card" id="overhead-card">
+                    <h3>SRT OVERHEAD</h3>
+                    <div class="big-value"><span id="overhead-val">0</span><small>%</small></div>
+                    <div class="trend-indicator" id="overhead-trend">OPTIMAL</div>
+                </div>
+                <div class="metricCard card full-width-metric" id="stream-info">
+                    <h3>STREAM IDENTIFICATION</h3>
+                    <div class="info-value">AWAITING HANDSHAKE...</div>
+                </div>
+            </section>
+
+            <section class="charts-area card">
+                <div class="chart-container">
+                    <canvas id="telemetryChart"></canvas>
+                </div>
+            </section>
+
+            <section class="matrix-area card">
+                <h3>STABILITY MATRIX</h3>
+                <div class="matrix-grid" id="health-matrix">
+                    <!-- LED dots will be generated here -->
+                </div>
+            </section>
+
+            <section class="logs-area card">
+                <h3>PROTOCOL EVENTS</h3>
+                <div class="log-container" id="log-output">
+                    <div class="log-entry system">SYSTEM READY. AWAITING ENGAGEMENT...</div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="tech-info">SRT v1.5.4 | BUFFER: <span id="buffer-val">0</span> pkts</div>
+            <div class="copyright">&copy; 2026 SRT OR DIE | ALPHA</div>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
